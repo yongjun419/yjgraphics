@@ -1,0 +1,142 @@
+let angle = 0;
+let angleSpeed = 0.05; // 회전 속도를 조절합니다.
+let scaleValue = 2;
+
+function setup() {
+  createCanvas(800, 600);
+}
+function draw() {
+  background(220);
+ 
+  // 왼쪽에 빨간 새 캐릭터 그리기
+  push();
+  translate(width / 4, height / 2);
+  // 회전과 크기 변경
+  rotate(angle);
+  scale(scaleValue);
+  // 캐릭터 그리기
+  drawRedBird();
+  pop();
+  
+  // 오른쪽에 하얀 캐릭터 그리기
+  push();
+  translate(width * 3 / 4, height / 2);
+  // 회전을 위해 각도 설정
+  let characterAngle = PI / 6 * sin(angle);
+  // 캐릭터 그리기
+  drawCharacter(characterAngle);
+  pop();
+  
+  // 돼지 캐릭터 그리기
+  push();
+  translate(width / 2, height * 3 / 4);
+  // 마우스 위치에 따라 회전 각도 계산
+  let pigAngle = atan2(mouseY - height * 3 / 4, mouseX - width / 2);
+  rotate(pigAngle);
+  drawPig();
+  pop();
+  
+  // 각도 증가
+  angle += angleSpeed;
+}
+
+function drawRedBird() {
+  //벼슬
+  fill(255, 204, 0);
+  ellipse(-7, -75, 10, 30);
+  ellipse(7, -75, 10, 30);
+  ellipse(0, -80, 10, 30);
+
+  // 날개
+  fill(255, 0, 0);
+  beginShape();
+  vertex(-35, -10);
+  bezierVertex(-35, -25, -60, -30, -80, -25);
+  bezierVertex(-80, -10, -40, -10, -50, -10);
+  endShape(CLOSE);
+
+  beginShape();
+  vertex(35, -10);
+  bezierVertex(35, -25, 60, -30, 80, -25);
+  bezierVertex(80, -10, 40, -10, 50, -10);
+  endShape(CLOSE);
+  
+  // 머리
+  fill(255, 0, 0);
+  ellipse(0, -30, 80, 80);
+
+  // 눈
+  fill(255);
+  ellipse(-20, -35, 20, 20);
+  ellipse(20, -35, 20, 20);
+  fill(0);
+  ellipse(-20, -35, 8, 8);
+  ellipse(20, -35, 8, 8);
+  
+  // 부리
+  fill(255, 204, 0);
+  triangle(17, -10, -17, -10, 0, -20); // 삼각형 위치 변경
+  triangle(15, -10, -15, -10, 0, 0); // 삼각형 위치 변경
+
+  // 눈썹
+  fill(0);
+  rect(-32, -50, 25, 7);
+  rect(8, -50, 25, 7);
+}
+
+function drawCharacter(characterAngle) {
+  // 회전
+  rotate(characterAngle);
+
+  // 몸
+  fill(255);
+  ellipse(0, sin(characterAngle) * 10, 100, 100);
+  // 머리
+  fill(255);
+  ellipse(-30, -20 + sin(characterAngle) * 10, 50, 50);
+  ellipse(30, -20 + sin(characterAngle) * 10, 50, 50);
+  // 눈
+  fill(0);
+  ellipse(-20, -30 + sin(characterAngle) * 10, 20, 20);
+  ellipse(20, -30 + sin(characterAngle) * 10, 20, 20);
+  // 코
+  fill(255, 128, 0);
+  ellipse(0, -10 + sin(characterAngle) * 10, 15, 15);
+  // 입
+  strokeWeight(3);
+  fill(255,0,0);
+  arc(0, -5 + sin(characterAngle) * 10, 20, 30, 0, PI);
+  // 손
+  fill(255);
+  ellipse(-50, 20 + sin(characterAngle) * 10, 25, 25);
+  ellipse(50, 20 + sin(characterAngle) * 10, 25, 25);
+}
+
+function drawPig() {
+  // 몸
+  fill(255, 182, 193);
+  ellipse(0, 0, 120, 100);
+
+  // 귀
+  fill(255, 182, 193);
+  ellipse(-40, -70, 50, 80);
+  ellipse(40, -70, 50, 80);
+
+  // 눈
+  fill(0);
+  ellipse(-25, -10, 20, 20);
+  ellipse(25, -10, 20, 20);
+
+  // 코
+  fill(255, 87, 87);
+  ellipse(0, 20, 30, 30);
+
+  // 코 구멍
+  fill(0);
+  ellipse(-5, 15, 5, 5);
+  ellipse(5, 15, 5, 5);
+
+  // 입
+  noFill();
+  arc(0, 30, 40, 20, 0, PI);
+}
